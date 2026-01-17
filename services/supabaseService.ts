@@ -172,6 +172,13 @@ export const supabaseService = {
     return data || [];
   },
 
+  getBlogById: async (id: string): Promise<Blog | null> => {
+    if (!supabase) return null;
+    const { data, error } = await supabase.from(TABLES.BLOGS).select('*').eq('id', id).maybeSingle();
+    if (error) return null;
+    return data;
+  },
+
   addBlog: async (blog: Omit<Blog, 'id' | 'date'>): Promise<Blog> => {
     if (!supabase) throw new Error("Supabase missing.");
     const { data, error } = await supabase.from(TABLES.BLOGS).insert([{

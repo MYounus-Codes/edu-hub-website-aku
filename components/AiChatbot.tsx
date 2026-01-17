@@ -231,16 +231,16 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
 
       {/* Scrollable Chat Area */}
       <main ref={mainRef} className="flex-1 overflow-y-auto relative z-10 custom-scrollbar scroll-smooth">
-        <div className="max-w-4xl mx-auto w-full px-4 md:px-0 py-8 md:py-20">
+        <div className="max-w-4xl mx-auto w-full px-4 md:px-0 py-6 md:py-10">
           {messages.length === 0 ? (
-            <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4 animate-reveal">
-              <div className="w-16 h-16 md:w-24 md:h-24 bg-white rounded-2xl md:rounded-[2.5rem] flex items-center justify-center mb-6 md:mb-10 border border-slate-100 shadow-2xl">
-                <Sparkles className="w-8 h-8 md:w-12 md:h-12 text-univet-gold" />
+            <div className="min-h-[50vh] flex flex-col items-center justify-center text-center px-4 animate-reveal">
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-xl md:rounded-2xl flex items-center justify-center mb-5 md:mb-6 border border-slate-100 shadow-xl">
+                <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-univet-gold" />
               </div>
-              <h2 className="text-3xl md:text-6xl font-serif font-black mb-4 md:mb-6 text-univet-blue leading-tight">Upload Papers & Notes. <br className="hidden md:block"/>Chat with Knowledge.</h2>
-              <p className="text-slate-500 font-bold mb-10 md:mb-14 max-w-md text-base md:text-lg">Upload your files to receive instant board-aligned analysis, summaries, and solve past papers together.</p>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-black mb-3 md:mb-4 text-univet-blue leading-tight">Upload Papers & Notes. <br className="hidden md:block"/>Chat with Knowledge.</h2>
+              <p className="text-slate-500 font-bold mb-6 md:mb-8 max-w-md text-xs md:text-sm">Upload your files to receive instant board-aligned analysis, summaries, and solve past papers together.</p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                 {[
                   { icon: PenTool, label: "Physics Equations", text: "Explain the equations for Work and Power with examples." },
                   { icon: FileText, label: "Pattern Analysis", text: "Common patterns in Grade 10 Math Papers (2020-2024)?" }
@@ -248,29 +248,29 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
                   <button 
                     key={idx}
                     onClick={() => setInput(action.text)}
-                    className="bg-white border border-slate-100 p-4 md:p-6 rounded-2xl md:rounded-3xl text-left hover:shadow-xl hover:border-univet-gold transition-all group flex items-center space-x-4"
+                    className="bg-white border border-slate-100 p-3 md:p-4 rounded-xl md:rounded-2xl text-left hover:shadow-xl hover:border-univet-gold transition-all group flex items-center space-x-3"
                   >
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-50 flex items-center justify-center group-hover:bg-univet-gold transition-colors shrink-0">
-                      <action.icon className="w-5 h-5 md:w-6 h-6 text-univet-blue" />
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-univet-gold transition-colors shrink-0">
+                      <action.icon className="w-4 h-4 md:w-5 h-5 text-univet-blue" />
                     </div>
                     <div>
-                      <p className="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-400 group-hover:text-univet-blue mb-0.5 md:mb-1">Quick Prompt</p>
-                      <p className="text-sm md:text-base font-black text-univet-blue leading-tight">{action.label}</p>
+                      <p className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400 group-hover:text-univet-blue mb-0.5">Quick Prompt</p>
+                      <p className="text-xs md:text-sm font-black text-univet-blue leading-tight">{action.label}</p>
                     </div>
                   </button>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="space-y-8 md:space-y-12">
+            <div className="space-y-6 md:space-y-8">
               {messages.map((msg, idx) => (
                 <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-reveal`}>
-                  <div className={`flex items-start max-w-[98%] sm:max-w-[90%] md:max-w-[85%] gap-2 md:gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                    <div className={`w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-2xl flex-shrink-0 flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-univet-blue' : 'bg-white border border-slate-100'}`}>
-                      {msg.role === 'user' ? <User className="w-4 h-4 md:w-6 md:h-6 text-white" /> : <Bot className="w-4 h-4 md:w-6 md:h-6 text-univet-gold" />}
+                  <div className={`flex items-start max-w-[98%] sm:max-w-[90%] md:max-w-[85%] gap-2 md:gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                    <div className={`w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl flex-shrink-0 flex items-center justify-center shadow-lg ${msg.role === 'user' ? 'bg-univet-blue' : 'bg-white border border-slate-100'}`}>
+                      {msg.role === 'user' ? <User className="w-4 h-4 md:w-5 md:h-5 text-white" /> : <Bot className="w-4 h-4 md:w-5 md:h-5 text-univet-gold" />}
                     </div>
-                    <div className="space-y-2 md:space-y-3">
-                      <div className={`p-4 md:p-8 rounded-2xl md:rounded-[2.5rem] shadow-sm border ${msg.role === 'user' ? 'bg-univet-blue text-white rounded-tr-none border-blue-900' : 'bg-white border-slate-100 text-univet-blue rounded-tl-none border-l-4 border-l-univet-gold'}`}>
+                    <div className="space-y-1.5 md:space-y-2">
+                      <div className={`p-3 md:p-5 rounded-xl md:rounded-2xl shadow-sm border ${msg.role === 'user' ? 'bg-univet-blue text-white rounded-tr-none border-blue-900' : 'bg-white border-slate-100 text-univet-blue rounded-tl-none border-l-4 border-l-univet-gold'}`}>
                         {msg.parts.map((part, pIdx) => (
                           <div key={pIdx}>
                             {part.text && (
@@ -297,13 +297,13 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
               
               {(loading || isRetrieving) && (
                 <div className="flex justify-start">
-                  <div className="flex items-start space-x-3 md:space-x-4 animate-pulse">
-                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-2xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
-                      <Loader2 className="w-4 h-4 md:w-6 md:h-6 text-univet-gold animate-spin" />
+                  <div className="flex items-start space-x-2 md:space-x-3 animate-pulse">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-sm">
+                      <Loader2 className="w-4 h-4 md:w-5 md:h-5 text-univet-gold animate-spin" />
                     </div>
-                    <div className="p-4 md:p-8 bg-white border border-slate-100 rounded-2xl md:rounded-[2.5rem] rounded-tl-none flex items-center space-x-2 md:space-x-3">
+                    <div className="p-3 md:p-5 bg-white border border-slate-100 rounded-xl md:rounded-2xl rounded-tl-none flex items-center space-x-2 md:space-x-3">
                       <Database className="w-3 h-3 md:w-4 md:h-4 text-univet-gold animate-bounce" />
-                      <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">
+                      <span className="text-[7px] md:text-[8px] font-black uppercase tracking-widest text-slate-400">
                         {isRetrieving ? 'Searching Archives' : 'Thinking'}
                       </span>
                     </div>
@@ -369,15 +369,15 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
                 placeholder="Query equations or archives..."
-                className="w-full bg-white border-2 border-slate-100 rounded-[1.5rem] md:rounded-[2.5rem] pl-14 md:pl-20 pr-14 md:pr-24 py-4 md:py-7 outline-none focus:border-univet-gold focus:ring-4 focus:ring-univet-gold/5 transition-all text-univet-blue font-bold text-sm md:text-xl shadow-2xl placeholder-slate-300"
+                className="w-full bg-white border-2 border-slate-100 rounded-2xl md:rounded-[2rem] pl-14 md:pl-20 pr-14 md:pr-24 py-3 md:py-5 outline-none focus:border-univet-gold focus:ring-4 focus:ring-univet-gold/5 transition-all text-univet-blue font-bold text-sm md:text-lg shadow-2xl placeholder-slate-300"
               />
 
               <button 
                 onClick={handleSend}
                 disabled={loading || (!input.trim() && !attachedFile)}
-                className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 bg-univet-blue rounded-xl md:rounded-2xl flex items-center justify-center text-univet-gold hover:scale-105 active:scale-95 transition-all shadow-xl disabled:opacity-30 disabled:scale-100"
+                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-univet-blue rounded-xl md:rounded-2xl flex items-center justify-center text-univet-gold hover:scale-105 active:scale-95 transition-all shadow-xl disabled:opacity-30 disabled:scale-100"
               >
-                <Send className="w-5 h-5 md:w-7 md:h-7" />
+                <Send className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
 

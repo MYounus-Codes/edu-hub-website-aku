@@ -3,16 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { supabaseService } from '../services/supabaseService';
 import { LogOut, Menu, X, BookOpen, User as UserIcon, Sparkles } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface NavbarProps {
   user: User | null;
-  onViewChange: (view: string) => void;
   onLoginClick: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ user, onViewChange, onLoginClick }) => {
+const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -25,46 +27,57 @@ const Navbar: React.FC<NavbarProps> = ({ user, onViewChange, onLoginClick }) => 
   };
 
   const navLinks = [
-    { label: 'Home', view: 'home' },
-    { label: 'Grade 9', view: 'grade-9' },
-    { label: 'Grade 10', view: 'grade-10' },
-    { label: 'Insights', view: 'blog' },
-    { label: 'AI Assistant', view: 'ai-assistant', icon: true },
+    { label: 'Home', path: '/' },
+    { label: 'Grade 9', path: '/grade-9' },
+    { label: 'Grade 10', path: '/grade-10' },
+    { label: 'Insights', path: '/blogs' },
+    { label: 'AI Assistant', path: '/ai-assistant', icon: true },
   ];
 
   if (user?.role === 'admin') {
-    navLinks.push({ label: 'Console', view: 'admin' });
+    navLinks.push({ label: 'Console', path: '/admin' });
   }
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setIsMenuOpen(false);
+    window.scrollTo(0, 0);
+  };
+
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname !== '/') return false;
+    return location.pathname.startsWith(path);
+  };
+
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? 'py-4 glass shadow-sm' : 'py-6 bg-white border-b border-slate-100'}`}>
-      <div className="max-w-7xl mx-auto px-6">
+    <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled ? 'py-2 glass shadow-sm' : 'py-3 bg-white border-b border-slate-100'}`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div 
-            className="flex items-center space-x-3 cursor-pointer group"
-            onClick={() => onViewChange('home')}
+            className="flex items-center space-x-2.5 cursor-pointer group"
+            onClick={() => handleNavigation('/')}
           >
-            <div className="bg-univet-blue p-2.5 rounded-xl shadow-lg shadow-blue-900/10 group-hover:bg-univet-gold transition-colors">
-              <BookOpen className="w-6 h-6 text-white group-hover:text-univet-blue" />
+            <div className="bg-univet-blue p-2 rounded-lg shadow-lg shadow-blue-900/10 group-hover:bg-univet-gold transition-colors">
+              <BookOpen className="w-5 h-5 text-white group-hover:text-univet-blue" />
             </div>
             <div className="hidden sm:block">
-              <span className="block text-xl font-serif font-black tracking-tight text-univet-blue">UNIVET</span>
-              <span className="block text-[9px] uppercase font-bold tracking-[0.2em] text-univet-gold">Scholarly Portal</span>
+              <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">UNIVET</span>
+              <span className="block text-[8px] uppercase font-bold tracking-[0.2em] text-univet-gold leading-none">Scholarly Portal</span>
             </div>
           </div>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-10">
+          <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
               <button
-                key={link.view}
-                onClick={() => onViewChange(link.view)}
-                className={`text-sm font-bold transition-colors relative group flex items-center ${link.icon ? 'text-blue-600' : 'text-slate-600 hover:text-univet-blue'}`}
+                key={link.path}
+                onClick={() => handleNavigation(link.path)}
+                className={`text-sm font-bold transition-colors relative group flex items-center ${link.icon ? 'text-blue-600' : isActive(link.path) ? 'text-univet-blue' : 'text-slate-600 hover:text-univet-blue'}`}
               >
                 {link.icon && <Sparkles className="w-3 h-3 mr-1.5 text-univet-gold" />}
                 {link.label}
-                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all group-hover:w-full ${link.icon ? 'bg-blue-600' : 'bg-univet-gold'}`}></span>
+                <span className={`absolute -bottom-1 left-0 h-0.5 transition-all group-hover:w-full ${isActive(link.path) ? 'w-full' : 'w-0'} ${link.icon ? 'bg-blue-600' : 'bg-univet-gold'}`}></span>
               </button>
             ))}
             
@@ -114,13 +127,11 @@ const Navbar: React.FC<NavbarProps> = ({ user, onViewChange, onLoginClick }) => 
         <div className="md:hidden glass border-t border-slate-100 p-6 space-y-4 animate-reveal">
           {navLinks.map((link) => (
             <button
-              key={link.view}
-              onClick={() => {
-                onViewChange(link.view);
-                setIsMenuOpen(false);
-              }}
-              className={`block w-full text-left py-3 text-lg font-bold ${link.icon ? 'text-blue-600' : 'text-slate-700 hover:text-univet-blue'}`}
+              key={link.path}
+              onClick={() => handleNavigation(link.path)}
+              className={`block w-full text-left py-3 text-lg font-bold flex items-center ${link.icon ? 'text-blue-600' : 'text-slate-700 hover:text-univet-blue'} ${isActive(link.path) && !link.icon ? 'text-univet-blue bg-slate-50 pl-4 rounded-lg' : ''}`}
             >
+              {link.icon && <Sparkles className="w-4 h-4 mr-2" />}
               {link.label}
             </button>
           ))}
