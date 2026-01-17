@@ -57,11 +57,14 @@ const App: React.FC = () => {
     
     try {
       let loggedUser;
+      const password = formData.get('password') as string;
+
       if (authMode === 'login') {
-        loggedUser = await supabaseService.login(email, authRole);
+        loggedUser = await supabaseService.login(email, password, authRole);
       } else {
         const username = formData.get('username') as string;
-        loggedUser = await supabaseService.register(username, email, authRole);
+        const secretKey = formData.get('secretKey') as string | undefined;
+        loggedUser = await supabaseService.register(username, email, password, authRole, secretKey);
       }
       setUser(loggedUser);
       setShowAuthModal(false);
@@ -380,10 +383,18 @@ const App: React.FC = () => {
 
               <form onSubmit={handleAuth} className="space-y-4 md:space-y-5">
                 {authMode === 'register' && (
-                  <div className="relative">
-                    <UserIcon className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
-                    <input name="username" type="text" required className="w-full pl-12 pr-8 py-4 md:py-5 rounded-xl md:rounded-2xl bg-slate-50 border-2 border-transparent focus:border-univet-gold outline-none font-bold text-base md:text-lg transition-all" placeholder="Legal Name" />
-                  </div>
+                  <>
+                    <div className="relative">
+                      <UserIcon className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                      <input name="username" type="text" required className="w-full pl-12 pr-8 py-4 md:py-5 rounded-xl md:rounded-2xl bg-slate-50 border-2 border-transparent focus:border-univet-gold outline-none font-bold text-base md:text-lg transition-all" placeholder="Legal Name" />
+                    </div>
+                    {authRole === 'admin' && (
+                      <div className="relative">
+                        <ShieldCheck className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />
+                        <input name="secretKey" type="password" required className="w-full pl-12 pr-8 py-4 md:py-5 rounded-xl md:rounded-2xl bg-slate-50 border-2 border-transparent focus:border-univet-gold outline-none font-bold text-base md:text-lg transition-all" placeholder="Faculty Secret Key" />
+                      </div>
+                    )}
+                  </>
                 )}
                 <div className="relative">
                   <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" />

