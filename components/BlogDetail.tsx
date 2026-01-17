@@ -185,9 +185,9 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
         <div className="mt-20 md:mt-32 pt-12 md:pt-16 border-t border-gray-100">
            <h4 className="text-3xl md:text-4xl font-serif font-black text-univet-blue mb-8 md:mb-12 text-center md:text-left">Recommended Analysis</h4>
             
-           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 mb-16">
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16">
               {recommendedBlogs.map((b) => (
-                 <div key={b.id} className="group cursor-pointer" onClick={() => {
+                 <div key={b.id} className="group cursor-pointer bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden" onClick={() => {
                     if(openBlog) {
                         openBlog(b);
                     } else {
@@ -195,21 +195,37 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
                     }
                     window.scrollTo(0, 0);
                  }}>
-                    <div className="h-52 overflow-hidden rounded-[2rem] mb-6 shadow-sm">
+                    {/* Image Section */}
+                    <div className="h-40 overflow-hidden relative border-b border-slate-50">
                         <img 
                           src={b.image || fallbackImage} 
                           alt={b.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                         />
                     </div>
-                    <div className="flex items-center space-x-3 mb-3 text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                        <span>{new Date(b.date).toLocaleDateString()}</span>
-                        <span>•</span>
-                        <span className="text-univet-gold">{b.author}</span>
+                    
+                    {/* Content Section */}
+                    <div className="p-5 flex flex-col">
+                        {/* Meta Header similar to example image */}
+                        <div className="flex items-center space-x-2 mb-3">
+                            <div className="w-5 h-5 bg-slate-900 rounded text-white flex items-center justify-center text-[10px] font-serif font-black">
+                                I
+                            </div>
+                            <div className="text-[10px] md:text-[11px] text-slate-500 font-medium truncate">
+                                In <span className="font-bold text-slate-800">Insights</span> by <span className="font-bold text-slate-800">{b.author}</span>
+                            </div>
+                        </div>
+                        
+                        {/* Title */}
+                        <h5 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2 leading-tight group-hover:text-univet-blue transition-colors font-serif">
+                            {b.title}
+                        </h5>
+                        
+                        {/* Description */}
+                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed font-medium">
+                            {b.content.replace(/[#*_\[\]()]/g, '').substring(0, 120)}...
+                        </p>
                     </div>
-                    <h5 className="text-xl font-black text-univet-blue group-hover:text-univet-gold transition-colors leading-tight mb-3 line-clamp-2">
-                        {b.title}
-                    </h5>
                  </div>
               ))}
            </div>
