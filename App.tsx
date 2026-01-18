@@ -11,6 +11,7 @@ import Blogs from './components/Blogs';
 import Home from './components/Home';
 import AiChatbot from './components/AiChatbot';
 import TodoApp from './components/TodoApp';
+import McqGenerator from './components/McqGenerator';
 import { 
   ShieldCheck, 
   Mail, 
@@ -87,6 +88,7 @@ const App: React.FC = () => {
           <Route path="/blogs" element={<Blogs blogs={blogs} />} />
           <Route path="/blogs/:id" element={<BlogDetail allBlogs={blogs} />} />
           <Route path="/todos" element={<TodoApp user={user} />} />
+          <Route path="/mcq-generator" element={<McqGenerator user={user} />} />
           <Route path="/admin" element={user?.role === 'admin' ? <AdminDashboard /> : <div className="p-20 text-center font-bold text-red-500">Access Restricted</div>} />
         </Routes>
       </main>

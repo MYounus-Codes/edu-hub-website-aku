@@ -16,7 +16,8 @@ import {
   MessageSquareCode,
   ListTodo,
   CheckCircle2,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
 
 interface HomeProps {
@@ -314,8 +315,99 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
         </div>
       </section>
 
+      {/* MCQ FEATURE SECTION */}
+      <section className="bg-white py-16 md:py-24 px-4 md:px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            {/* Right Content (Text) - Swapped Order */}
+            <div className="order-2 lg:order-2 animate-reveal">
+               <div className="inline-flex items-center space-x-2 bg-blue-100 px-3 py-1 rounded-full mb-4">
+                  <Sparkles className="w-4 h-4 text-blue-600 animate-pulse" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-blue-700">New Feature</span>
+               </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black text-univet-blue mb-6 leading-tight">
+                Instant Quiz <br/>
+                <span className="text-blue-600">Generation.</span>
+              </h2>
+              <p className="text-slate-600 text-lg font-medium mb-8 leading-relaxed max-w-lg">
+                Create unlimited practice exams on any topic in seconds. Our AI generates standard board-aligned MCQs, tracks your scores, and provides detailed explanations for every answer.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                {[
+                  "Generate quizzes for any subject or topic",
+                  "Instant grading with detailed explanations",
+                  "PDF export for offline practice"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center space-x-3">
+                    <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-slate-700 font-semibold">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={() => navigate('/mcq-generator')}
+                className="bg-univet-blue text-white px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-blue-800 hover:shadow-lg hover:-translate-y-1 transition-all flex items-center group shadow-blue-200 shadow-xl"
+              >
+                Start Generating
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+
+            {/* Left Content (Video/Animation) - Swapped Order */}
+            <div className="order-1 lg:order-1 relative animate-reveal" style={{ animationDelay: '0.2s' }}>
+              <div className="relative bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-800/50 p-2 transform -rotate-1 hover:rotate-0 transition-transform duration-500 overflow-hidden group">
+                
+                {/* Video Container */}
+                <div className="relative aspect-video bg-slate-950 rounded-[1.5rem] overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center bg-slate-800">
+                      {/* You can replace this placeholder with a real video tag: <video src="..." autoPlay loop muted playsInline className="w-full h-full object-cover" /> */}
+                      <video 
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        poster="https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?auto=format&fit=crop&q=80&w=1200"
+                      >
+                         <source src="https://cdn.dribbble.com/userupload/12479634/file/original-5dc638069818815157924c87cb71a398.mp4" type="video/mp4" />
+                         {/* Fallback animation if video fails or is placeholder */}
+                         <div className="w-full h-full bg-slate-900 flex flex-col items-center justify-center space-y-4 animate-pulse">
+                              <Loader2 className="w-12 h-12 text-blue-500 animate-spin" />
+                              <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Generating Quiz...</span>
+                         </div>
+                      </video>
+
+                      {/* Overlay Gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent pointer-events-none"></div>
+
+                      {/* Video Controls / Badges */}
+                      <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                              <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                              <span className="text-white text-[10px] font-black uppercase tracking-widest">Live Demo</span>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute -z-10 top-0 left-0 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20"></div>
+                <div className="absolute -z-10 bottom-0 right-0 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-20"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };
 
 export default Home;
+
