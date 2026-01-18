@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
           <div className="max-w-4xl">
             <div className="inline-flex items-center bg-blue-600 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold text-[9px] md:text-[10px] uppercase tracking-[0.2em] mb-6 md:mb-10 animate-reveal shadow-lg">
               <ShieldCheck className="w-4 h-4 mr-2 text-univet-gold" />
-              Official AKU-EB Archive v2.5
+              Students Trusted Platform
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-black text-univet-blue leading-[1.1] mb-6 animate-reveal">
