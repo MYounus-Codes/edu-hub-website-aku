@@ -76,9 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
             className="flex items-center space-x-2.5 cursor-pointer group"
             onClick={() => handleNavigation('/')}
           >
-            <div className="bg-univet-blue p-2 rounded-lg shadow-lg shadow-blue-900/10 group-hover:bg-univet-gold transition-colors">
-              <BookOpen className="w-5 h-5 text-white group-hover:text-univet-blue" />
-            </div>
+            <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain hover:scale-110 transition-transform" />
             <div className="hidden sm:block">
               <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">Prime Students</span>
               <span className="block text-[8px] uppercase font-bold tracking-[0.2em] text-univet-gold leading-none">Scholarly Portal</span>

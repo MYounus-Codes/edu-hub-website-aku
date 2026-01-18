@@ -210,8 +210,8 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
             <ArrowLeft className="w-5 h-5 text-univet-blue" />
           </button>
           <div className="flex items-center space-x-3 md:space-x-4">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-univet-blue rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg shadow-blue-900/10">
-              <Brain className="w-6 h-6 md:w-7 md:h-7 text-univet-gold" />
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg shadow-blue-900/10 overflow-hidden p-1">
+              <img src="/logo.png" className="w-full h-full object-contain" alt="Prime Students Neural Logo" />
             </div>
             <div>
               <h1 className="text-lg md:text-xl font-serif font-black tracking-tight leading-none text-univet-blue">Prime Students Neural</h1>

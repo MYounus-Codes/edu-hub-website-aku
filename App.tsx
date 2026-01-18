@@ -99,7 +99,10 @@ const App: React.FC = () => {
         <footer className="bg-univet-blue text-white pt-20 pb-10 px-4 md:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-white/10 pb-16">
             <div className="space-y-6">
-              <h3 className="text-3xl font-serif font-black text-univet-gold">Prime Students</h3>
+              <div className="flex items-center space-x-3">
+                <img src="/logo.png" className="w-12 h-12 object-contain bg-white rounded-xl p-1" alt="Logo" />
+                <h3 className="text-3xl font-serif font-black text-univet-gold">Prime Students</h3>
+              </div>
               <p className="text-slate-400 font-semibold text-sm leading-relaxed max-w-sm">The definitive digital archive for Grade 9 & 10 success, built on verified data and faculty expertise.</p>
             </div>
             <div className="space-y-6">
