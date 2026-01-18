@@ -54,3 +54,14 @@ export const SUBJECTS = [
 ];
 
 export const YEARS = Array.from({ length: 2025 - 2012 + 1 }, (_, i) => (2012 + i).toString()).reverse();
+
+export interface McqResult {
+  id: string;
+  user_id: string;
+  subject: string;
+  topic: string;
+  score: number;
+  total_questions: number;
+  percentage: number;
+  created_at?: string;
+}

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { supabaseService } from '../services/supabaseService';
-import { LogOut, Menu, X, BookOpen, User as UserIcon, Sparkles, ChevronDown } from 'lucide-react';
+import { LogOut, Menu, X, BookOpen, User as UserIcon, Sparkles, ChevronDown, LayoutDashboard, CheckCircle2 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface NavbarProps {
@@ -12,6 +12,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -124,23 +125,49 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
             ))}
             
             {user ? (
-              <div className="flex items-center space-x-5 border-l border-slate-200 pl-8">
-                <div className="flex items-center space-x-3">
-                  <div className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center border border-slate-200">
-                    <UserIcon className="w-4 h-4 text-slate-500" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter leading-none">Signed in</span>
-                    <span className="text-sm font-extrabold text-univet-blue">{user.username}</span>
-                  </div>
-                </div>
+              <div className="relative border-l border-slate-200 pl-6 ml-6">
                 <button 
-                  onClick={handleLogout}
-                  className="p-2.5 rounded-xl text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-all"
-                  title="Logout"
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${isUserMenuOpen ? 'bg-univet-blue border-univet-blue text-white shadow-lg ring-2 ring-blue-100' : 'bg-white border-slate-200 text-slate-600 hover:border-univet-blue hover:text-univet-blue'}`}
                 >
-                  <LogOut className="w-5 h-5" />
+                  <UserIcon className="w-5 h-5" />
                 </button>
+
+                {isUserMenuOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40 bg-transparent" onClick={() => setIsUserMenuOpen(false)}></div>
+                    <div className="absolute top-full right-0 mt-4 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 overflow-hidden animate-reveal z-50">
+                      <div className="px-4 py-3 border-b border-slate-50 mb-1">
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
+                        <p className="text-sm font-black text-univet-blue truncate">{user.username}</p>
+                      </div>
+                      
+                      <button 
+                        onClick={() => { navigate('/dashboard'); setIsUserMenuOpen(false); }}
+                        className="w-full text-left px-4 py-3 text-sm font-bold text-slate-600 hover:text-univet-blue hover:bg-slate-50 rounded-xl transition-colors flex items-center"
+                      >
+                        <LayoutDashboard className="w-4 h-4 mr-3" />
+                        My Learning
+                      </button>
+
+                      <button 
+                        onClick={() => { navigate('/todos'); setIsUserMenuOpen(false); }}
+                        className="w-full text-left px-4 py-3 text-sm font-bold text-slate-600 hover:text-univet-blue hover:bg-slate-50 rounded-xl transition-colors flex items-center"
+                      >
+                        <CheckCircle2 className="w-4 h-4 mr-3" />
+                        Task List
+                      </button>
+
+                      <button 
+                        onClick={() => { handleLogout(); setIsUserMenuOpen(false); }}
+                        className="w-full text-left px-4 py-3 text-sm font-bold text-rose-500 hover:bg-rose-50 rounded-xl transition-colors flex items-center mt-1"
+                      >
+                        <LogOut className="w-4 h-4 mr-3" />
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <button

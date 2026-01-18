@@ -17,6 +17,8 @@ import {
   FileText
 } from 'lucide-react';
 
+import { supabaseService } from '../services/supabaseService';
+
 interface MCQ {
   question: string;
   options: string[];
@@ -144,6 +146,23 @@ const McqGenerator: React.FC<McqGeneratorProps> = ({ user }) => {
       }
     });
     return score;
+  };
+  
+  const handleQuizCompletion = async () => {
+     if (!user) return;
+     const score = calculateScore();
+     try {
+        await supabaseService.addMcqResult({
+            user_id: user.id,
+            subject: "General",
+            topic: topic,
+            total_questions: mcqs.length,
+            score: score,
+            percentage: Math.round((score / mcqs.length) * 100)
+        });
+     } catch (err) {
+        console.error("Failed to save result", err);
+     }
   };
 
   const handleDownloadPDF = () => {
@@ -382,7 +401,7 @@ const McqGenerator: React.FC<McqGeneratorProps> = ({ user }) => {
                       </div>
 
                       {showResults && (
-                          <div className="mt-6 ml-0 md:ml-12 p-5 bg-slate-50 rounded-2xl text-sm text-slate-600 border border-slate-200 print:bg-transparent print:border print:border-slate-300 print:mt-2">
+                          <div className="p-5 bg-slate-50 rounded-2xl text-sm text-slate-600 border border-slate-200 print:bg-transparent print:border print:border-slate-300 print:mt-2">
                               <div className="flex items-center gap-2 mb-2">
                                 <BookOpen className="w-4 h-4 text-blue-500 no-print" />
                                 <span className="font-bold text-slate-800">Explanation:</span>
@@ -398,7 +417,10 @@ const McqGenerator: React.FC<McqGeneratorProps> = ({ user }) => {
               {!showResults && (
                   <div className="flex justify-end pt-4 pb-12 no-print">
                       <button
-                          onClick={() => setShowResults(true)}
+                          onClick={() => {
+                              setShowResults(true);
+                              handleQuizCompletion();
+                          }}
                           disabled={Object.keys(userAnswers).length < mcqs.length}
                           className="h-14 px-8 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold shadow-lg shadow-emerald-600/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
                       >

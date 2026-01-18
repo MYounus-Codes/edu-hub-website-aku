@@ -26,6 +26,9 @@ const TodoApp: React.FC<TodoAppProps> = ({ user }) => {
   const [newTaskTag, setNewTaskTag] = useState<Todo['tag']>('Study');
   const [error, setError] = useState<string | null>(null);
 
+  // Expose reload method via props or simple ref if needed, but for now simple refresh is fine
+  // Or better, move state up. For this request, I'll keep it self contained but hide header if embedding 
+  
   useEffect(() => {
     if (user) {
       loadTodos();

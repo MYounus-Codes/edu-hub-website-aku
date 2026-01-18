@@ -1,6 +1,6 @@
 
 import { createClient } from '@supabase/supabase-js';
-import { Material, Blog, User, Grade, MaterialType, Todo } from '../types';
+import { Material, Blog, User, Grade, MaterialType, Todo, McqResult } from '../types';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -16,7 +16,8 @@ const TABLES = {
   G9_PAPERS: 'grade9_pastpapers',
   G10_NOTES: 'grade10_notes',
   G10_PAPERS: 'grade10_pastpapers',
-  TODOS: 'todos'
+  TODOS: 'todos',
+  MCQ_RESULTS: 'mcq_results'
 };
 
 const SESSION_KEY = 'akueb_db_session';
@@ -254,5 +255,32 @@ export const supabaseService = {
       .delete()
       .eq('id', id);
     if (error) throw handleSupabaseError(error, 'Delete Todo');
+  },
+
+  // MCQ Result Methods
+  getMcqResults: async (userId: string): Promise<McqResult[]> => {
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from(TABLES.MCQ_RESULTS)
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    
+    if (error) {
+       console.warn("Error fetching mcq results:", error.message);
+       return [];
+    }
+    return data || [];
+  },
+
+  addMcqResult: async (result: Omit<McqResult, 'id' | 'created_at'>): Promise<McqResult> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { data, error } = await supabase
+      .from(TABLES.MCQ_RESULTS)
+      .insert([result])
+      .select()
+      .single();
+    if (error) throw handleSupabaseError(error, 'Save Quiz Result');
+    return data;
   }
 };
