@@ -1,6 +1,6 @@
 
 import { createClient } from '@supabase/supabase-js';
-import { Material, Blog, User, Grade, MaterialType, Todo, McqResult } from '../types';
+import { Material, Blog, User, Grade, MaterialType, Todo, McqResult, Comment } from '../types';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -12,6 +12,8 @@ const supabase = isConfigured ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : 
 const TABLES = {
   USERS: 'users',
   BLOGS: 'blogs',
+  COMMENTS: 'comments',
+  BLOG_LIKES: 'blog_likes',
   G9_NOTES: 'grade9_notes',
   G9_PAPERS: 'grade9_pastpapers',
   G10_NOTES: 'grade10_notes',
@@ -209,6 +211,79 @@ export const supabaseService = {
     if (!supabase) throw new Error("Supabase missing.");
     const { error } = await supabase.from(TABLES.BLOGS).delete().eq('id', id);
     if (error) throw handleSupabaseError(error, 'Blog Deletion');
+  },
+
+  // Comment Methods
+  getComments: async (blogId: string): Promise<Comment[]> => {
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from(TABLES.COMMENTS)
+      .select('*')
+      .eq('blog_id', blogId)
+      .order('created_at', { ascending: true }); // Oldest first
+    if (error) {
+      console.warn("Error fetching comments:", error.message);
+      return [];
+    }
+    return data || [];
+  },
+
+  addComment: async (comment: { blog_id: string; user_name: string; content: string }): Promise<Comment> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { data, error } = await supabase
+      .from(TABLES.COMMENTS)
+      .insert([comment])
+      .select()
+      .single();
+    if (error) throw handleSupabaseError(error, 'Add Comment');
+    return data;
+  },
+
+  // Like Methods
+  hasUserLikedBlog: async (blogId: string, userId: string): Promise<boolean> => {
+     if (!supabase) return false;
+     const { data } = await supabase
+       .from(TABLES.BLOG_LIKES)
+       .select('id')
+       .eq('blog_id', blogId)
+       .eq('user_id', userId)
+       .maybeSingle();
+     return !!data;
+  },
+
+  toggleBlogLike: async (blogId: string, userId: string): Promise<{ liked: boolean, count: number }> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    
+    // Check if liked
+    const hasLiked = await supabaseService.hasUserLikedBlog(blogId, userId);
+    
+    // Get current count
+    const blog = await supabaseService.getBlogById(blogId);
+    let currentCount = blog?.likes || 0;
+
+    if (hasLiked) {
+       // Unlike
+       await supabase.from(TABLES.BLOG_LIKES).delete().eq('blog_id', blogId).eq('user_id', userId);
+       currentCount = Math.max(0, currentCount - 1);
+    } else {
+       // Like
+       await supabase.from(TABLES.BLOG_LIKES).insert([{ blog_id: blogId, user_id: userId }]);
+       currentCount = currentCount + 1;
+    }
+
+    // Update blog count
+    await supabase.from(TABLES.BLOGS).update({ likes: currentCount }).eq('id', blogId);
+    
+    return { liked: !hasLiked, count: currentCount };
+  },
+
+  updateBlogLikes: async (blogId: string, newLikesCount: number): Promise<void> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { error } = await supabase
+      .from(TABLES.BLOGS)
+      .update({ likes: newLikesCount })
+      .eq('id', blogId);
+    if (error) throw handleSupabaseError(error, 'Update Likes');
   },
 
   // Todo Methods

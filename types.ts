@@ -23,6 +23,15 @@ export interface Blog {
   author: string;
   date: string;
   image: string;
+  likes?: number;
+}
+
+export interface Comment {
+  id: string;
+  blog_id: string;
+  user_name: string;
+  content: string;
+  created_at: string;
 }
 
 export interface User {
