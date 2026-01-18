@@ -88,7 +88,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
     if (!file) return;
 
     if (!['application/pdf', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      alert("UNIVET Support: Please upload PDF or Image files for analysis.");
+      alert("Prime Students Support: Please upload PDF or Image files for analysis.");
       return;
     }
 
@@ -165,7 +165,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const context = await getRelevantContext(input);
 
-      const systemInstruction = `You are the UNIVET Neural Assistant, a professional AKU-EB academic advisor.
+      const systemInstruction = `You are the Prime Students Neural Assistant, a professional AKU-EB academic advisor.
       
       ARCHIVE KNOWLEDGE:
       ${context}
@@ -214,7 +214,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
               <Brain className="w-6 h-6 md:w-7 md:h-7 text-univet-gold" />
             </div>
             <div>
-              <h1 className="text-lg md:text-xl font-serif font-black tracking-tight leading-none text-univet-blue">UNIVET Neural</h1>
+              <h1 className="text-lg md:text-xl font-serif font-black tracking-tight leading-none text-univet-blue">Prime Students Neural</h1>
               <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-univet-gold mt-0.5 md:mt-1">Research AI</p>
             </div>
           </div>

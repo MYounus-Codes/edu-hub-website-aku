@@ -99,15 +99,21 @@ const App: React.FC = () => {
         <footer className="bg-univet-blue text-white pt-20 pb-10 px-4 md:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-white/10 pb-16">
             <div className="space-y-6">
-              <h3 className="text-3xl font-serif font-black text-univet-gold">UNIVET</h3>
+              <h3 className="text-3xl font-serif font-black text-univet-gold">Prime Students</h3>
               <p className="text-slate-400 font-semibold text-sm leading-relaxed max-w-sm">The definitive digital archive for Grade 9 & 10 success, built on verified data and faculty expertise.</p>
             </div>
             <div className="space-y-6">
               <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-univet-gold">Quick Access</h4>
               <ul className="space-y-3 text-sm font-bold text-slate-300">
+                <li onClick={() => navigate('/')} className="hover:text-white cursor-pointer transition-colors">Home</li>
                 <li onClick={() => navigate('/grade-9')} className="hover:text-white cursor-pointer transition-colors">Grade 9 Archive</li>
                 <li onClick={() => navigate('/grade-10')} className="hover:text-white cursor-pointer transition-colors">Grade 10 Archive</li>
                 <li onClick={() => navigate('/blogs')} className="hover:text-white cursor-pointer transition-colors">Scholarly Insights</li>
+                <li onClick={() => navigate('/mcq-generator')} className="hover:text-white cursor-pointer transition-colors">MCQ Generator</li>
+                <li onClick={() => navigate('/todos')} className="hover:text-white cursor-pointer transition-colors">Todo App</li>
+                <li onClick={() => navigate('/dashboard')} className="hover:text-white cursor-pointer transition-colors">User Dashboard</li>
+                <li onClick={() => navigate('/ai-assistant')} className="hover:text-white cursor-pointer transition-colors">AI Chatbot</li>
+                {authRole === 'admin' && <li onClick={() => navigate('/admin')} className="hover:text-white cursor-pointer transition-colors">Admin Dashboard</li>}
               </ul>
             </div>
             <div className="space-y-6">
@@ -119,7 +125,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="max-w-7xl mx-auto mt-10 text-center">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">&copy; 2025 UNIVET AKU-EB ARCHIVE • ACADEMIC INTEGRITY SECURED</p>
+            <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">&copy; 2025 Prime Students AKU-EB ARCHIVE • ACADEMIC INTEGRITY SECURED</p>
           </div>
         </footer>
       )}

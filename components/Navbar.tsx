@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
               <BookOpen className="w-5 h-5 text-white group-hover:text-univet-blue" />
             </div>
             <div className="hidden sm:block">
-              <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">UNIVET</span>
+              <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">Prime Students</span>
               <span className="block text-[8px] uppercase font-bold tracking-[0.2em] text-univet-gold leading-none">Scholarly Portal</span>
             </div>
           </div>

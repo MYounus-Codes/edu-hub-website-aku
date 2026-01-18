@@ -190,7 +190,7 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
                       <MessageSquareCode className="w-6 h-6 text-univet-blue" />
                     </div>
                     <div>
-                      <p className="text-white font-black">UNIVET Neural v1.0</p>
+                      <p className="text-white font-black">Prime Students Neural v1.0</p>
                       <p className="text-emerald-400 text-[10px] font-black uppercase tracking-widest">System Online</p>
                     </div>
                   </div>
