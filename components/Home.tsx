@@ -13,7 +13,10 @@ import {
   Cpu, 
   Brain, 
   Zap,
-  MessageSquareCode
+  MessageSquareCode,
+  ListTodo,
+  CheckCircle2,
+  Calendar
 } from 'lucide-react';
 
 interface HomeProps {
@@ -218,6 +221,99 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
           </div>
         </div>
       </section>
+      {/* TODO FEATURE SECTION */}
+      <section className="bg-slate-50 py-16 md:py-24 px-4 md:px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            
+            {/* Left Content (Text) */}
+            <div className="order-2 lg:order-1 animate-reveal">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-black text-univet-blue mb-6 leading-tight">
+                Master Your <br/>
+                <span className="text-emerald-600">Daily Objectives.</span>
+              </h2>
+              <p className="text-slate-600 text-lg font-medium mb-8 leading-relaxed max-w-lg">
+                Stay organized with our integrated task management system. Prioritize assignments, track revision goals, and maintain your academic momentum with precision.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                {[
+                  "Smart deadline reminders for assignments",
+                  "Categorize tasks by subject priority",
+                  "Progress analytics for weekly goals"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center space-x-3">
+                    <div className="w-6 h-6 rounded-full bg-emerald-100 flex items-center justify-center">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    </div>
+                    <span className="text-slate-700 font-semibold">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                onClick={() => navigate('/todos')}
+                className="bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-emerald-700 hover:shadow-lg hover:-translate-y-1 transition-all flex items-center group shadow-emerald-200 shadow-xl"
+              >
+                Launch Planner
+                <ListTodo className="ml-2 w-5 h-5 group-hover:scale-110 transition-transform" />
+              </button>
+            </div>
+
+            {/* Right Content (Animated Demo) */}
+            <div className="order-1 lg:order-2 relative animate-reveal" style={{ animationDelay: '0.2s' }}>
+              <div className="relative bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-8 md:p-10 max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                
+                {/* Header of Todo App */}
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <h3 className="text-2xl font-black text-slate-800">My Tasks</h3>
+                    <p className="text-slate-400 text-xs font-bold uppercase tracking-widest mt-1">Today, Jan 18</p>
+                  </div>
+                  <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center">
+                    <Calendar className="w-6 h-6 text-emerald-600" />
+                  </div>
+                </div>
+
+                {/* Animated List Items */}
+                <div className="space-y-4">
+                  {[
+                    { text: "Complete Physics Past Paper 2023", tag: "Urgent", color: "text-rose-600 bg-rose-50" },
+                    { text: "Revise Biology Chapter 4 Notes", tag: "Study", color: "text-blue-600 bg-blue-50" },
+                    { text: "Submit Math Assignment", tag: "School", color: "text-amber-600 bg-amber-50" },
+                  ].map((task, i) => (
+                    <div key={i} className="flex items-center p-4 rounded-xl border border-slate-100 bg-white shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
+                      <div className={`w-6 h-6 rounded-full border-2 border-slate-200 mr-4 flex items-center justify-center group-hover:bg-emerald-500 group-hover:border-emerald-500 transition-colors duration-300 relative overflow-hidden`}>
+                         <div className="absolute inset-0 bg-emerald-500 transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center rounded-full"></div>
+                         <CheckCircle2 className="w-4 h-4 text-white opacity-0 group-hover:opacity-100 relative z-10 transition-opacity duration-300 delay-75" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-slate-700 font-bold text-sm group-hover:text-slate-400 group-hover:line-through transition-all duration-300">{task.text}</p>
+                      </div>
+                      <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-1 rounded-lg ${task.color} opacity-100 group-hover:opacity-50 transition-opacity`}>
+                        {task.tag}
+                      </span>
+                    </div>
+                  ))}
+                  
+                  {/* Floating Action Button simulation */}
+                  <div className="mt-6 flex justify-center">
+                    <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-transform">
+                      <span className="text-white text-2xl font-light mb-1">+</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute -z-10 top-0 right-0 w-32 h-32 bg-emerald-100 rounded-full blur-3xl opacity-50"></div>
+                <div className="absolute -z-10 bottom-0 left-0 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 };

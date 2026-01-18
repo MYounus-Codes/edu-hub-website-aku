@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { User } from '../types';
 import { supabaseService } from '../services/supabaseService';
-import { LogOut, Menu, X, BookOpen, User as UserIcon, Sparkles } from 'lucide-react';
+import { LogOut, Menu, X, BookOpen, User as UserIcon, Sparkles, ChevronDown } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 interface NavbarProps {
@@ -13,6 +13,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,6 +32,15 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
     { label: 'Grade 9', path: '/grade-9' },
     { label: 'Grade 10', path: '/grade-10' },
     { label: 'Insights', path: '/blogs' },
+    { 
+      label: 'Services', 
+      path: '#',
+      dropdown: [
+        { label: 'MCQs Generator', path: '/mcq-generator' },
+        { label: 'My Todos', path: '/todos' },
+        { label: 'Coming Soon', path: '#' }
+      ]
+    },
     { label: 'AI Assistant', path: '/ai-assistant', icon: true },
   ];
 
@@ -41,12 +51,19 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
   const handleNavigation = (path: string) => {
     navigate(path);
     setIsMenuOpen(false);
+    setActiveDropdown(null);
     window.scrollTo(0, 0);
   };
 
   const isActive = (path: string) => {
     if (path === '/' && location.pathname !== '/') return false;
+    if (path === '#' || !path) return false;
     return location.pathname.startsWith(path);
+  };
+
+  const isDropdownActive = (dropdownItems: { path: string }[] | undefined) => {
+    if (!dropdownItems) return false;
+    return dropdownItems.some(item => item.path !== '#' && location.pathname.startsWith(item.path));
   };
 
   return (
@@ -70,15 +87,40 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-6">
             {navLinks.map((link) => (
-              <button
-                key={link.path}
-                onClick={() => handleNavigation(link.path)}
-                className={`text-sm font-bold transition-colors relative group flex items-center ${link.icon ? 'text-blue-600' : isActive(link.path) ? 'text-univet-blue' : 'text-slate-600 hover:text-univet-blue'}`}
-              >
-                {link.icon && <Sparkles className="w-3 h-3 mr-1.5 text-univet-gold" />}
-                {link.label}
-                <span className={`absolute -bottom-1 left-0 h-0.5 transition-all group-hover:w-full ${isActive(link.path) ? 'w-full' : 'w-0'} ${link.icon ? 'bg-blue-600' : 'bg-univet-gold'}`}></span>
-              </button>
+              <div key={link.label} className="relative group">
+                <button
+                  onClick={() => !link.dropdown && handleNavigation(link.path)}
+                  className={`text-sm font-bold transition-colors relative flex items-center ${link.icon ? 'text-blue-600' : isActive(link.path) || isDropdownActive(link.dropdown) || (link.dropdown && activeDropdown === link.label) ? 'text-univet-blue' : 'text-slate-600 hover:text-univet-blue'}`}
+                  onMouseEnter={() => link.dropdown && setActiveDropdown(link.label)}
+                  onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
+                >
+                  {link.icon && <Sparkles className="w-3 h-3 mr-1.5 text-univet-gold" />}
+                  {link.label}
+                  {link.dropdown && <ChevronDown className="w-4 h-4 ml-1" />}
+                  <span className={`absolute -bottom-1 left-0 h-0.5 transition-all group-hover:w-full ${isActive(link.path) || isDropdownActive(link.dropdown) ? 'w-full' : 'w-0'} ${link.icon ? 'bg-blue-600' : 'bg-univet-gold'}`}></span>
+                </button>
+
+                {/* Dropdown Menu */}
+                {link.dropdown && (
+                  <div 
+                    className={`absolute top-full left-0 w-48 pt-2 transition-all duration-200 ${activeDropdown === link.label ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}
+                    onMouseEnter={() => setActiveDropdown(link.label)}
+                    onMouseLeave={() => setActiveDropdown(null)}
+                  >
+                    <div className="bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden py-1">
+                      {link.dropdown.map((item) => (
+                        <button
+                          key={item.label}
+                          onClick={() => handleNavigation(item.path)}
+                          className="w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-600 hover:text-univet-blue hover:bg-slate-50 transition-colors flex items-center"
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
             
             {user ? (

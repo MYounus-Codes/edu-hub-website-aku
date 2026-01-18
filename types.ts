@@ -32,6 +32,15 @@ export interface User {
   role: 'admin' | 'user';
 }
 
+export interface Todo {
+  id: string;
+  user_id: string;
+  text: string;
+  is_completed: boolean;
+  tag: 'Urgent' | 'Study' | 'School' | 'Personal';
+  created_at: string;
+}
+
 export const SUBJECTS = [
   'Mathematics',
   'Biology',

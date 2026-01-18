@@ -1,6 +1,6 @@
 
 import { createClient } from '@supabase/supabase-js';
-import { Material, Blog, User, Grade, MaterialType } from '../types';
+import { Material, Blog, User, Grade, MaterialType, Todo } from '../types';
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -15,7 +15,8 @@ const TABLES = {
   G9_NOTES: 'grade9_notes',
   G9_PAPERS: 'grade9_pastpapers',
   G10_NOTES: 'grade10_notes',
-  G10_PAPERS: 'grade10_pastpapers'
+  G10_PAPERS: 'grade10_pastpapers',
+  TODOS: 'todos'
 };
 
 const SESSION_KEY = 'akueb_db_session';
@@ -207,5 +208,51 @@ export const supabaseService = {
     if (!supabase) throw new Error("Supabase missing.");
     const { error } = await supabase.from(TABLES.BLOGS).delete().eq('id', id);
     if (error) throw handleSupabaseError(error, 'Blog Deletion');
+  },
+
+  // Todo Methods
+  getTodos: async (userId: string): Promise<Todo[]> => {
+    if (!supabase) return [];
+    const { data, error } = await supabase
+      .from(TABLES.TODOS)
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false }); // Show newest first
+    
+    if (error) {
+       console.error("Error fetching todos:", error);
+       // Return empty array instead of throwing to prevent app crash if table is missing
+       return []; 
+    }
+    return data || [];
+  },
+
+  addTodo: async (todo: Omit<Todo, 'id' | 'created_at'>): Promise<Todo> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { data, error } = await supabase
+      .from(TABLES.TODOS)
+      .insert([todo])
+      .select()
+      .single();
+    if (error) throw handleSupabaseError(error, 'Add Todo');
+    return data;
+  },
+
+  toggleTodo: async (id: string, is_completed: boolean): Promise<void> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { error } = await supabase
+      .from(TABLES.TODOS)
+      .update({ is_completed })
+      .eq('id', id);
+    if (error) throw handleSupabaseError(error, 'Toggle Todo');
+  },
+
+  deleteTodo: async (id: string): Promise<void> => {
+    if (!supabase) throw new Error("Supabase is not configured.");
+    const { error } = await supabase
+      .from(TABLES.TODOS)
+      .delete()
+      .eq('id', id);
+    if (error) throw handleSupabaseError(error, 'Delete Todo');
   }
 };
