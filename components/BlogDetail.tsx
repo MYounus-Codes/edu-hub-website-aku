@@ -386,7 +386,7 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               {recommendedBlogs.map((b) => (
                  <div key={b.id} className="group cursor-pointer flex gap-4 items-start" onClick={() => {
-                    openBlog ? openBlog(b) : navigate(`/blogs/${b.id}`);
+                    openBlog ? openBlog(b) : navigate(`/blogs/${b.slug}`);
                     window.scrollTo(0, 0);
                  }}>
                      <div className="w-24 h-16 rounded md:rounded-lg overflow-hidden shrink-0">
