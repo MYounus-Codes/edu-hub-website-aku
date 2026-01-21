@@ -125,7 +125,7 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
                   <p className="text-slate-500 font-semibold mb-6 line-clamp-2 text-xs md:text-sm">{blog.content.replace(/[#*]/g, '').substring(0, 110)}...</p>
                   <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
                     <span className="text-[9px] font-black text-univet-blue uppercase tracking-tighter">{blog.author}</span>
-                    <button onClick={() => navigate(`/blogs/${blog.id}`)} className="text-blue-600 font-black flex items-center text-[10px] hover:text-univet-blue transition-colors">
+                    <button onClick={() => navigate(`/blogs/${blog.slug}`)} className="text-blue-600 font-black flex items-center text-[10px] hover:text-univet-blue transition-colors">
                       Read More <ArrowRight className="ml-1.5 w-3 h-3" />
                     </button>
                   </div>
