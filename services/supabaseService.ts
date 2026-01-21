@@ -176,9 +176,9 @@ export const supabaseService = {
     return data || [];
   },
 
-  getBlogById: async (id: string): Promise<Blog | null> => {
+  getBlogBySlug: async (slug: string): Promise<Blog | null> => {
     if (!supabase) return null;
-    const { data, error } = await supabase.from(TABLES.BLOGS).select('*').eq('id', id).maybeSingle();
+    const { data, error } = await supabase.from(TABLES.BLOGS).select('*').eq('slug', slug).maybeSingle();
     if (error) return null;
     return data;
   },
@@ -190,6 +190,7 @@ export const supabaseService = {
       content: blog.content,
       author: blog.author,
       image: blog.image,
+      slug: blog.slug,
       date: new Date().toISOString()
     }]).select().maybeSingle();
     if (error) throw handleSupabaseError(error, 'Blog Archival');

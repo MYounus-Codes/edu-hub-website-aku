@@ -113,13 +113,14 @@ const AdminDashboard: React.FC = () => {
     setIsSubmitting(true);
     try {
       if (editingBlog) {
-        await supabaseService.updateBlog(editingBlog.id, blogForm);
+        await supabaseService.updateBlog(editingBlog.id, { ...blogForm, slug: blogForm.slug });
         setSuccess(`Blog Updated: ${blogForm.title}`);
       } else {
-        await supabaseService.addBlog(blogForm);
+        await supabaseService.addBlog({ ...blogForm, slug: blogForm.slug });
         setSuccess(`Blog Archived: ${blogForm.title}`);
       }
       setBlogForm({ title: '', content: '', author: '', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200' });
+        setBlogForm({ title: '', slug: '', content: '', author: '', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200' });
       setEditingBlog(null);
       setBlogContentMode('write');
       setTimeout(() => setSuccess(null), 4000);
@@ -470,8 +471,31 @@ const AdminDashboard: React.FC = () => {
                 </h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <input type="text" required value={blogForm.title} onChange={(e) => setBlogForm({...blogForm, title: e.target.value})} className={inputClass} placeholder="Insight Headline" />
-                                <input type="text" required value={blogForm.title} onChange={(e) => setBlogForm({...blogForm, title: e.target.value})} className={inputClass} placeholder="Blog Headline" />
+                <input
+                  type="text"
+                  required
+                  value={blogForm.title}
+                  onChange={(e) => {
+                    const title = e.target.value;
+                    const slug = title
+                      .toLowerCase()
+                      .replace(/[^a-z0-9\s-]/g, '')
+                      .trim()
+                      .replace(/\s+/g, '-')
+                      .replace(/-+/g, '-');
+                    setBlogForm({ ...blogForm, title, slug });
+                  }}
+                  className={inputClass}
+                  placeholder="Blog Headline"
+                />
+                <input
+                  type="text"
+                  required
+                  value={blogForm.slug}
+                  className={inputClass}
+                  placeholder="Blog Slug (SEO-friendly)"
+                  readOnly
+                />
                 <input type="text" required value={blogForm.author} onChange={(e) => setBlogForm({...blogForm, author: e.target.value})} className={inputClass} placeholder="Contributing Scholar" />
               </div>
               <input type="text" value={blogForm.image} onChange={(e) => setBlogForm({...blogForm, image: e.target.value})} className={inputClass} placeholder="Cover Imagery URL" />

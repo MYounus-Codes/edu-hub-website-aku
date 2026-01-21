@@ -14,7 +14,7 @@ interface BlogDetailProps {
 }
 
 const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [], openBlog, onBack }) => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [blog, setBlog] = useState<Blog | undefined>(initialBlog);
   const [htmlContent, setHtmlContent] = useState<string>('');
@@ -42,13 +42,13 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
       let activeBlog = initialBlog;
 
       // 2. Resolve the blog object
-      if (!activeBlog && allBlogs.length > 0 && id) {
-        activeBlog = allBlogs.find(b => b.id === id);
+      if (!activeBlog && allBlogs.length > 0 && slug) {
+        activeBlog = allBlogs.find(b => b.slug === slug);
       }
 
-      if (!activeBlog && id) {
+      if (!activeBlog && slug) {
         setLoading(true);
-        const fetched = await supabaseService.getBlogById(id);
+        const fetched = await supabaseService.getBlogBySlug(slug);
         if (fetched) {
             activeBlog = fetched;
         } else {
@@ -77,7 +77,7 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
     };
 
     fetchBlogAndComments();
-  }, [id, initialBlog, allBlogs]);
+  }, [slug, initialBlog, allBlogs]);
 
   const fallbackImage = "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1200";
 

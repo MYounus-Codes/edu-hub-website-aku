@@ -87,7 +87,7 @@ const App: React.FC = () => {
           <Route path="/grade-10" element={<GradeBrowser grade="Grade 10" />} />
           <Route path="/ai-assistant" element={<AiChatbot onBack={() => navigate('/')} />} />
           <Route path="/blogs" element={<Blogs blogs={blogs} />} />
-          <Route path="/blogs/:id" element={<BlogDetail allBlogs={blogs} />} />
+          <Route path="/blogs/:slug" element={<BlogDetail allBlogs={blogs} />} />
           <Route path="/todos" element={<TodoApp user={user} />} />
           <Route path="/dashboard" element={<UserDashboard user={user} />} />
           <Route path="/mcq-generator" element={<McqGenerator user={user} />} />
