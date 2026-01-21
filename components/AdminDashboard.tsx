@@ -114,10 +114,10 @@ const AdminDashboard: React.FC = () => {
     try {
       if (editingBlog) {
         await supabaseService.updateBlog(editingBlog.id, blogForm);
-        setSuccess(`Insight Updated: ${blogForm.title}`);
+        setSuccess(`Blog Updated: ${blogForm.title}`);
       } else {
         await supabaseService.addBlog(blogForm);
-        setSuccess(`Insight Archived: ${blogForm.title}`);
+        setSuccess(`Blog Archived: ${blogForm.title}`);
       }
       setBlogForm({ title: '', content: '', author: '', image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200' });
       setEditingBlog(null);
@@ -145,10 +145,10 @@ const AdminDashboard: React.FC = () => {
   };
 
   const handleDeleteBlog = async (blog: Blog) => {
-    if (!confirm(`Permanently purge insight "${blog.title}"?`)) return;
+    if (!confirm(`Permanently purge blog "${blog.title}"?`)) return;
     try {
       await supabaseService.deleteBlog(blog.id);
-      setSuccess('Insight purged from database.');
+      setSuccess('Blog purged from database.');
       setEditingBlog(null);
       fetchAllContent();
       setTimeout(() => setSuccess(null), 3000);
@@ -196,7 +196,7 @@ const AdminDashboard: React.FC = () => {
   const combinedRepository = useMemo(() => {
     let combined: any[] = [
       ...materials.map(m => ({ ...m, category: 'Material' })),
-      ...blogs.map(b => ({ ...b, category: 'Blog', grade: 'All', type: 'Insight' as any, subject: 'Scholarly' }))
+      ...blogs.map(b => ({ ...b, category: 'Blog', grade: 'All', type: 'Blog' as any, subject: 'General' }))
     ];
 
     return combined.filter(item => {
@@ -254,7 +254,7 @@ const AdminDashboard: React.FC = () => {
           {[
             { id: 'manage', icon: Settings, label: 'Repository' },
             { id: 'material', icon: Upload, label: 'Materials' },
-            { id: 'blog', icon: Newspaper, label: 'Insights' }
+            { id: 'blog', icon: Newspaper, label: 'Blogs' }
           ].map((tab) => (
             <button 
               key={tab.id}
@@ -311,6 +311,7 @@ const AdminDashboard: React.FC = () => {
                           <option value="Past Paper">Past Papers</option>
                           <option value="Note">Notes</option>
                           <option value="Blog">Insights</option>
+                                                  <option value="Blog">Blogs</option>
                         </select>
                       </div>
                    </div>
@@ -365,7 +366,7 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex flex-col gap-1">
                             <span className="text-[9px] md:text-[10px] font-black text-univet-blue/50 uppercase">{item.grade}</span>
                             <span className={`text-[8px] md:text-[9px] font-black px-2 py-0.5 rounded-md self-start ${item.type === 'Past Paper' ? 'bg-amber-100 text-amber-700' : item.type === 'Note' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700'}`}>
-                              {item.type || 'Insight'}
+                              {item.type || 'Blog'}
                             </span>
                           </div>
                         </td>
@@ -465,11 +466,12 @@ const AdminDashboard: React.FC = () => {
             <form onSubmit={handleBlogSubmit} className="space-y-6 md:space-y-8 animate-reveal">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <h3 className="text-xl md:text-2xl font-serif font-black text-univet-blue">
-                  {editingBlog ? 'Edit Scholarly Insight' : 'Publish New Academic Insight'}
+                  {editingBlog ? 'Edit Blog' : 'Publish New Blog'}
                 </h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <input type="text" required value={blogForm.title} onChange={(e) => setBlogForm({...blogForm, title: e.target.value})} className={inputClass} placeholder="Insight Headline" />
+                                <input type="text" required value={blogForm.title} onChange={(e) => setBlogForm({...blogForm, title: e.target.value})} className={inputClass} placeholder="Blog Headline" />
                 <input type="text" required value={blogForm.author} onChange={(e) => setBlogForm({...blogForm, author: e.target.value})} className={inputClass} placeholder="Contributing Scholar" />
               </div>
               <input type="text" value={blogForm.image} onChange={(e) => setBlogForm({...blogForm, image: e.target.value})} className={inputClass} placeholder="Cover Imagery URL" />

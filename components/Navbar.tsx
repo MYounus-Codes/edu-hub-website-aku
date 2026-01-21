@@ -32,7 +32,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
     { label: 'Home', path: '/' },
     { label: 'Grade 9', path: '/grade-9' },
     { label: 'Grade 10', path: '/grade-10' },
-    { label: 'Insights', path: '/blogs' },
+    { label: 'Blogs', path: '/blogs' },
     { 
       label: 'Services', 
       path: '#',

@@ -133,7 +133,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
         .slice(0, 5)
         .map(si => {
           const m = si.item as any;
-          return `[RESOURCE: ${m.title}] Type: ${m.type || 'Insight'}, Subject: ${m.subject || 'Academic'}. Details: ${m.description || m.content?.substring(0, 150)}...`;
+          return `[RESOURCE: ${m.title}] Type: ${m.type || 'Blog'}, Subject: ${m.subject || 'General'}. Details: ${m.description || m.content?.substring(0, 150)}...`;
         })
         .join('\n\n');
     } catch (err) {

@@ -56,7 +56,7 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
             </h1>
             
             <p className="text-sm md:text-base text-slate-600 font-semibold mb-8 max-w-lg animate-reveal leading-relaxed">
-              Access a curated ecosystem of scholarly notes, validated past papers, and expert board insights designed specifically for AKU-EB excellence.
+              Access a curated ecosystem of scholarly notes, validated past papers, and daily blogs designed for AKU-EB excellence.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-3 animate-reveal">
@@ -104,8 +104,9 @@ const Home: React.FC<HomeProps> = ({ blogs }) => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-4">
             <div className="max-w-xl">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-black text-univet-blue mb-3 md:mb-4">Faculty Insights</h2>
-              <p className="text-slate-500 font-bold text-sm md:text-base leading-relaxed">Strategic analysis and curriculum updates direct from our authorized scholarly board.</p>
+              {/* <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-black text-univet-blue mb-3 md:mb-4">Faculty Insights</h2> */}
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-serif font-black text-univet-blue mb-3 md:mb-4">Blogs</h2>
+              <p className="text-slate-500 font-bold text-sm md:text-base leading-relaxed">Read daily blogs from us and contributors. Stay updated with fresh perspectives and stories.</p>
             </div>
             <button onClick={() => navigate('/blogs')} className="flex items-center space-x-2 text-xs font-black text-blue-600 uppercase tracking-widest hover:text-univet-blue transition-colors">
               <span>View Archives</span>

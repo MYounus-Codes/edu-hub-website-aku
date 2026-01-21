@@ -111,7 +111,7 @@ const App: React.FC = () => {
                 <li onClick={() => navigate('/')} className="hover:text-white cursor-pointer transition-colors">Home</li>
                 <li onClick={() => navigate('/grade-9')} className="hover:text-white cursor-pointer transition-colors">Grade 9 Archive</li>
                 <li onClick={() => navigate('/grade-10')} className="hover:text-white cursor-pointer transition-colors">Grade 10 Archive</li>
-                <li onClick={() => navigate('/blogs')} className="hover:text-white cursor-pointer transition-colors">Scholarly Insights</li>
+                <li onClick={() => navigate('/blogs')} className="hover:text-white cursor-pointer transition-colors">Blogs</li>
                 <li onClick={() => navigate('/mcq-generator')} className="hover:text-white cursor-pointer transition-colors">MCQ Generator</li>
                 <li onClick={() => navigate('/todos')} className="hover:text-white cursor-pointer transition-colors">Todo App</li>
                 <li onClick={() => navigate('/dashboard')} className="hover:text-white cursor-pointer transition-colors">User Dashboard</li>

@@ -639,7 +639,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({ user }) => {
                             </div>
                             <div>
                                 <span className="block font-bold text-slate-700">Read Blogs</span>
-                                <span className="text-xs text-slate-400 font-medium">Latest insights & news</span>
+                                <span className="text-xs text-slate-400 font-medium">Latest blogs & news</span>
                             </div>
                         </button>
                     </div>
