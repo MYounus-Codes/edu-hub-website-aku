@@ -78,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, onLoginClick }) => {
           >
             <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain hover:scale-110 transition-transform" />
             <div className="hidden sm:block">
-              <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">Prime Students</span>
+              <span className="block text-lg font-serif font-black tracking-tight text-univet-blue">AKU Concept Hub</span>
               <span className="block text-[8px] uppercase font-bold tracking-[0.2em] text-univet-gold leading-none">Scholarly Portal</span>
             </div>
           </div>

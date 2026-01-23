@@ -101,7 +101,7 @@ const App: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <img src="/logo.png" className="w-12 h-12 object-contain bg-white rounded-xl p-1" alt="Logo" />
-                <h3 className="text-3xl font-serif font-black text-univet-gold">Prime Students</h3>
+                <h3 className="text-3xl font-serif font-black text-univet-gold">AKU Concept Hub</h3>
               </div>
               <p className="text-slate-400 font-semibold text-sm leading-relaxed max-w-sm">The definitive digital archive for Grade 9 & 10 success, built on verified data and faculty expertise.</p>
             </div>
@@ -128,7 +128,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="max-w-7xl mx-auto mt-10 text-center">
-            <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">&copy; 2025 Prime Students AKU-EB ARCHIVE • ACADEMIC INTEGRITY SECURED</p>
+            <p className="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em]">&copy; 2025 AKU Concept Hub AKU-EB ARCHIVE • ACADEMIC INTEGRITY SECURED</p>
           </div>
         </footer>
       )}

@@ -88,7 +88,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
     if (!file) return;
 
     if (!['application/pdf', 'image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      alert("Prime Students Support: Please upload PDF or Image files for analysis.");
+      alert("AKU Concept Hub Support: Please upload PDF or Image files for analysis.");
       return;
     }
 
@@ -165,7 +165,7 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const context = await getRelevantContext(input);
 
-      const systemInstruction = `You are the Prime Students Neural Assistant, a professional AKU-EB academic advisor.
+      const systemInstruction = `You are the AKU Concept Hub Neural Assistant, a professional AKU-EB academic advisor.
       
       ARCHIVE KNOWLEDGE:
       ${context}
@@ -211,10 +211,10 @@ const AiChatbot: React.FC<AiChatbotProps> = ({ onBack }) => {
           </button>
           <div className="flex items-center space-x-3 md:space-x-4">
             <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg shadow-blue-900/10 overflow-hidden p-1">
-              <img src="/logo.png" className="w-full h-full object-contain" alt="Prime Students Neural Logo" />
+              <img src="/logo.png" className="w-full h-full object-contain" alt="AKU Concept Hub Neural Logo" />
             </div>
             <div>
-              <h1 className="text-lg md:text-xl font-serif font-black tracking-tight leading-none text-univet-blue">Prime Students Neural</h1>
+              <h1 className="text-lg md:text-xl font-serif font-black tracking-tight leading-none text-univet-blue">AKU Concept Hub Neural</h1>
               <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-univet-gold mt-0.5 md:mt-1">Research AI</p>
             </div>
           </div>
