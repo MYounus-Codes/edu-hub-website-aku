@@ -5,6 +5,7 @@ import { marked } from 'marked';
 import { ArrowLeft, Share2, Bookmark, Heart, MessageCircle, PlayCircle, MoreHorizontal, User, PauseCircle, Send, X } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabaseService } from '../services/supabaseService';
+import { parseMarkdownWithMath, injectMathCSS } from '../services/mathRenderer';
 
 interface BlogDetailProps {
   blog?: Blog;
@@ -81,11 +82,16 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
 
   const fallbackImage = "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&q=80&w=1200";
 
+  // Inject Math CSS on mount
+  useEffect(() => {
+    injectMathCSS();
+  }, []);
+
   // Content Parsing
   useEffect(() => {
     const parseContent = async () => {
       if (blog?.content) {
-        const html = await marked.parse(blog.content);
+        const html = await parseMarkdownWithMath(blog.content);
         setHtmlContent(html);
       }
     };
@@ -272,6 +278,7 @@ const BlogDetail: React.FC<BlogDetailProps> = ({ blog: initialBlog, allBlogs = [
           prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:pl-4 prose-blockquote:italic
           prose-strong:font-bold prose-strong:text-slate-900
           prose-img:rounded-md prose-img:shadow-sm prose-img:my-8 prose-img:w-full
+          prose-code:bg-slate-100 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
           selection:bg-green-100 selection:text-green-900"
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />

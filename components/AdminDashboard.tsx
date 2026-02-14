@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { supabaseService } from '../services/supabaseService';
 import { SUBJECTS, YEARS, Grade, MaterialType, Material, Blog } from '../types';
 import { Upload, CheckCircle, Newspaper, Database, AlertCircle, ImageIcon, Type, User, Link as LinkIcon, Settings, Trash2, Edit3, Loader2, Calendar, X, RefreshCw, Search, Eye, PenTool, Filter, BookOpen, Layers } from 'lucide-react';
-import { marked } from 'marked';
+import { parseMarkdownWithMath, injectMathCSS } from '../services/mathRenderer';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'material' | 'blog' | 'manage'>('manage');
@@ -11,6 +11,7 @@ const AdminDashboard: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [blogPreviewHtml, setBlogPreviewHtml] = useState<string>('');
   
   const [editingMaterial, setEditingMaterial] = useState<Material | null>(null);
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
@@ -64,7 +65,17 @@ const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     fetchAllContent();
+    injectMathCSS();
   }, []);
+
+  // Update blog preview when content changes
+  useEffect(() => {
+    const updatePreview = async () => {
+      const html = await parseMarkdownWithMath(blogForm.content || '*No content provided*');
+      setBlogPreviewHtml(html);
+    };
+    updatePreview();
+  }, [blogForm.content]);
 
   const highlightMatch = (text: string, query: string) => {
     if (!query || !text) return text;
@@ -229,11 +240,15 @@ const AdminDashboard: React.FC = () => {
   const selectFilterClass = "w-full pl-10 md:pl-12 pr-6 py-3 md:py-4 rounded-xl border border-slate-200 outline-none focus:border-univet-blue font-bold text-slate-700 bg-white appearance-none cursor-pointer text-xs md:text-sm shadow-sm transition-all";
 
   const renderBlogPreview = () => {
-    const html = marked.parse(blogForm.content || '*No content provided*');
     return (
       <div 
-        className="prose max-w-none bg-slate-50 p-4 md:p-6 rounded-xl md:rounded-2xl border-2 border-slate-100 min-h-[200px] overflow-y-auto"
-        dangerouslySetInnerHTML={{ __html: html }}
+        className="prose prose-lg max-w-none bg-slate-50 p-4 md:p-6 rounded-xl md:rounded-2xl border-2 border-slate-100 min-h-[200px] overflow-y-auto
+        prose-headings:font-sans prose-headings:font-bold
+        prose-p:text-slate-700 prose-p:leading-relaxed
+        prose-a:text-green-700 prose-a:no-underline hover:prose-a:underline
+        prose-code:bg-slate-200 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+        prose-blockquote:border-l-4 prose-blockquote:border-slate-400"
+        dangerouslySetInnerHTML={{ __html: blogPreviewHtml }}
       />
     );
   };
