@@ -2,13 +2,6 @@
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],
-  "redirects": [
-    {
-      "source": "/:path((?!api/.*).*)",
-      "destination": "https://akuconcepthub.com/:path",
-      "permanent": true
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",

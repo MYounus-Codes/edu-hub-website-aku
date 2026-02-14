@@ -11,7 +11,7 @@ Disallow: /.git
 Crawl-delay: 1
 
 # Sitemap
-Sitemap: https://akuconcepthub.com/sitemap.xml
+Sitemap: https://akuconcepthub.vercel.app/sitemap.xml
 
 # Google specific
 User-agent: Googlebot
