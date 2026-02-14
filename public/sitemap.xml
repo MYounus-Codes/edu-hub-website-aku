@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://akuconcepthub.vercel.app/</loc>
+    <loc>https://akuconcepthub.com/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/grade-9</loc>
+    <loc>https://akuconcepthub.com/grade-9</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/grade-10</loc>
+    <loc>https://akuconcepthub.com/grade-10</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/mcq-generator</loc>
+    <loc>https://akuconcepthub.com/mcq-generator</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/todos</loc>
+    <loc>https://akuconcepthub.com/todos</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/ai-assistant</loc>
+    <loc>https://akuconcepthub.com/ai-assistant</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs</loc>
+    <loc>https://akuconcepthub.com/blogs</loc>
     <priority>0.9</priority>
   </url>
   <!-- Add blog detail URLs below, one for each blog slug -->
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs/top-10-programming-languages-to-learn-in-2026-future-proof-your-career-in-the-ai-era</loc>
+    <loc>https://akuconcepthub.com/blogs/top-10-programming-languages-to-learn-in-2026-future-proof-your-career-in-the-ai-era</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs/top-5-tech-digital-roles-in-2026-and-why-demand-is-exploding</loc>
+    <loc>https://akuconcepthub.com/blogs/top-5-tech-digital-roles-in-2026-and-why-demand-is-exploding</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs/advanced-python-programming-enhance-your-codebase</loc>
+    <loc>https://akuconcepthub.com/blogs/advanced-python-programming-enhance-your-codebase</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs/gul-plaza-fire-how-a-deadly-inferno-exposed-karachis-safety-failures</loc>
+    <loc>https://akuconcepthub.com/blogs/gul-plaza-fire-how-a-deadly-inferno-exposed-karachis-safety-failures</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://akuconcepthub.vercel.app/blogs/introduction-to-python-programming-a-beginners-guide</loc>
+    <loc>https://akuconcepthub.com/blogs/introduction-to-python-programming-a-beginners-guide</loc>
     <priority>0.7</priority>
   </url>
 </urlset>
